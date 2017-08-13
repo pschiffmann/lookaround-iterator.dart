@@ -1,0 +1,7 @@
+name: lookaround_iterator
+version: 1.0.0
+author: Philipp Schiffmann <philippschiffmann93@gmail.com>
+description: Provides an iterator class with lookbehind and lookahead buffer.
+homepage: https://github.com/pschiffmann/lookaround-iterator
+dev_dependencies:
+  test: ^0.12.0
