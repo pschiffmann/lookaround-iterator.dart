@@ -83,6 +83,7 @@ class LookaroundIterator<T> implements Iterator<T> {
   /// [moveNext], if [lookbehind] >= 1. Else, throws a [RangeError].
   T get previous => this[-1];
 
+  @override
   T get current => this[0];
 
   /// Returns the element that will be [current] after the next call to
@@ -120,6 +121,7 @@ class LookaroundIterator<T> implements Iterator<T> {
           lookbehind, 'lookbehind', 'must be non-negative');
   }
 
+  @override
   bool moveNext() {
     // Shifts [_buffer] one index towards index 0, and fills the highest index
     // with  [_original.current].
