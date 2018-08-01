@@ -1,0 +1,8 @@
+# https://docs.travis-ci.com/user/languages/dart
+language: dart
+dart:
+- stable
+- "1.24.0"
+dart_task:
+  - dartanalyzer: --fatal-warnings --fatal-infos
+  - dartfmt
