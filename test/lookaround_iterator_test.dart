@@ -18,7 +18,7 @@ int _same(int n) => n;
 int _nextBigger(int n) => n + 1;
 int _twoBigger(int n) => n + 2;
 
-const List<int Function(int)> _relativeNumbers = const [
+const List<int Function(int)> _relativeNumbers = [
   _zero,
   _nextSmaller,
   _twoSmaller,
@@ -38,8 +38,7 @@ class _Combination {
 
   _Combination(
       this.lookbehind, this.lookahead, int Function(int) relativeIterableSize)
-      : list = new List.generate(
-            relativeIterableSize(lookbehind + 1 + lookahead),
+      : list = List.generate(relativeIterableSize(lookbehind + 1 + lookahead),
             (n) => (n + 1) * (n + 1));
 
   /// Returns the expected buffer (in the same format as [viewBuffer]) after
@@ -49,7 +48,7 @@ class _Combination {
     assert(steps >= 0);
     steps = min(steps, list.length);
 
-    final buffer = new List<int>(bufferSize);
+    final buffer = List<int>(bufferSize);
     for (var i = 0; i < buffer.length; i++) {
       try {
         buffer[i] = list[i - lookbehind + steps];
@@ -64,23 +63,22 @@ class _Combination {
 }
 
 /// Returns a list that represents the buffer of `it`.
-List<int> viewBuffer(LookaroundIterator<int> it) => new List<int>.generate(
+List<int> viewBuffer(LookaroundIterator<int> it) => List<int>.generate(
     it.lookbehind + 1 + it.lookahead, (n) => it[-it.lookbehind + n]);
 
 void main() {
   group('LookaroundIterator: constructor', () {
     test('sets correct lookbehind/lookahead values', () {
-      final it = new LookaroundIterator<int>(<int>[].iterator,
+      final it = LookaroundIterator<int>(<int>[].iterator,
           lookbehind: 2, lookahead: 3);
       expect(it.lookbehind, 2);
       expect(it.lookahead, 3);
     });
 
     test('throws on negative lookahead/lookbehind', () {
-      expect(
-          () => new LookaroundIterator<int>(<int>[].iterator, lookbehind: -1),
+      expect(() => LookaroundIterator<int>(<int>[].iterator, lookbehind: -1),
           throwsArgumentError);
-      expect(() => new LookaroundIterator<int>(<int>[].iterator, lookahead: -1),
+      expect(() => LookaroundIterator<int>(<int>[].iterator, lookahead: -1),
           throwsArgumentError);
     });
   });
@@ -91,12 +89,12 @@ void main() {
         if (relativeNumber != _zero &&
             relativeNumber(lookbehind + 1 + lookahead) < 1) continue;
 
-        final c = new _Combination(lookbehind, lookahead, relativeNumber);
+        final c = _Combination(lookbehind, lookahead, relativeNumber);
         test('LookaroundIterator: $c', () {
-          final it = new LookaroundIterator(c.list.iterator,
+          final it = LookaroundIterator(c.list.iterator,
               lookbehind: c.lookbehind, lookahead: c.lookahead);
 
-          expect(viewBuffer(it), new List<int>(c.bufferSize),
+          expect(viewBuffer(it), List<int>(c.bufferSize),
               reason: 'should be uninitialized (all elements == `null`)');
 
           for (var i = 0; i < c.list.length; i++) {

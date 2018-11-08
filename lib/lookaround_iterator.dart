@@ -100,7 +100,7 @@ class LookaroundIterator<T> implements Iterator<T> {
     try {
       return _buffer[_indexOfCurrent + offset];
     } on RangeError {
-      throw new RangeError.range(offset, lookbehind, lookahead);
+      throw RangeError.range(offset, lookbehind, lookahead);
     }
   }
 
@@ -109,15 +109,14 @@ class LookaroundIterator<T> implements Iterator<T> {
   ///
   /// Throws an [ArgumentError] if `lookahead` or `lookbehind` are negative.
   LookaroundIterator(Iterator<T> original,
-      {int lookahead: 0, int lookbehind: 0})
+      {int lookahead = 0, int lookbehind = 0})
       : _original = original,
         _indexOfCurrent = lookbehind,
-        _buffer = new List<T>(lookbehind + 1 + lookahead) {
+        _buffer = List<T>(lookbehind + 1 + lookahead) {
     if (lookahead < 0)
-      throw new ArgumentError.value(
-          lookahead, 'lookahead', 'must be non-negative');
+      throw ArgumentError.value(lookahead, 'lookahead', 'must be non-negative');
     if (lookbehind < 0)
-      throw new ArgumentError.value(
+      throw ArgumentError.value(
           lookbehind, 'lookbehind', 'must be non-negative');
   }
 
